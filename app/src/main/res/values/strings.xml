@@ -1,0 +1,25 @@
+<resources>
+    <!-- App name -->
+    <string name="app_name">TP7</string>
+
+    <!-- Drawer Labels -->
+    <string name="manage_teachers">Manage Teachers</string>
+    <string name="about">About</string>
+    <string name="logout">Logout</string>
+
+    <!-- Drawer Header -->
+    <string name="app_header_name">My App</string>
+    <string name="app_header_email">rahmaothmani007@gmail.com</string>
+
+    <!-- Toolbar Titles -->
+    <string name="toolbar_title_home">Teachers</string>
+    <string name="toolbar_title_about">About</string>
+
+    <!-- Drawer Open/Close Descriptions (for accessibility) -->
+    <string name="open_drawer">Open navigation drawer</string>
+    <string name="close_drawer">Close navigation drawer</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="liste_enseignants">Liste des Enseignants</string>
+
+</resources>

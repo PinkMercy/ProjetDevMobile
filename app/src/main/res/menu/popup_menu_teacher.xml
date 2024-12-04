@@ -1,0 +1,9 @@
+<!-- res/menu/popup_menu_header.xml -->
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/popup_show_hide_recycler"
+        android:title="Show/Hide RecyclerView" />
+    <item
+        android:id="@+id/popup_change_title_background"
+        android:title="Changer Titre Background" />
+</menu>

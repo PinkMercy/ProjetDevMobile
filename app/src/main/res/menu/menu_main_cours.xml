@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menu_add"
+        android:title="Ajouter"
+        android:icon="@drawable/ic_add" />
+    <item
+        android:id="@+id/menu_search"
+        android:title="Rechercher"
+        android:icon="@drawable/ic_search" />
+    <item
+        android:id="@+id/menu_list_all"
+        android:title="Lister Tous"
+        android:icon="@drawable/ic_list" />
+    <item
+        android:id="@+id/menu_clear_list"
+        android:title="Vider Liste"
+        android:icon="@drawable/ic_clear" />
+</menu>
+
+<!--<menu xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    xmlns:app="http://schemas.android.com/apk/res-auto">-->
+
+<!--    &lt;!&ndash; Option to sort courses A-Z &ndash;&gt;-->
+<!--    <item-->
+<!--        android:id="@+id/a_z"-->
+<!--        android:title="Sort A-Z"-->
+<!--        app:showAsAction="ifRoom" />-->
+
+<!--    &lt;!&ndash; Option to sort courses Z-A &ndash;&gt;-->
+<!--    <item-->
+<!--        android:id="@+id/z_a"-->
+<!--        android:title="Sort Z-A"-->
+<!--        app:showAsAction="ifRoom" />-->
+
+<!--    &lt;!&ndash; Option to add a new course &ndash;&gt;-->
+<!--    <item-->
+<!--        android:id="@+id/add"-->
+<!--        android:title="Add Course"-->
+<!--        app:showAsAction="ifRoom" />-->
+
+<!--</menu>-->
