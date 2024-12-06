@@ -1,6 +1,7 @@
 package iset.dsi.tp7;
 
 import android.annotation.SuppressLint;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,10 +18,11 @@ import java.util.List;
 
 public class TeacherFragment extends Fragment {
 
-    public static TeacherAdapter mAdapter; // Static access for MainActivity
+    private TeacherAdapter mAdapter; // Static access for MainActivity
     private List<Teacher> teacherList;
     private RecyclerView.LayoutManager mLayoutManager;
     private RecyclerView mRecyclerView;
+    private DatabaseHelper dbHelper;
 
     @SuppressLint("MissingInflatedId")
     @Nullable
@@ -34,20 +36,31 @@ public class TeacherFragment extends Fragment {
         mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        teacherList = new ArrayList<>();
-        populateTeacherList();
-
+        dbHelper = new DatabaseHelper(getContext());
+        teacherList = getTeachersFromDatabase(); // Fetch teachers dynamically
         mAdapter = new TeacherAdapter(teacherList);
         mRecyclerView.setAdapter(mAdapter);
 
         return view;
     }
 
-    private void populateTeacherList() {
-        for (int i = 1; i <= 100; i++) {
-            teacherList.add(new Teacher(i, "Teacher " + i, "teacher" + i + "@example.com"));
+    // Fetch teachers from the database
+    private List<Teacher> getTeachersFromDatabase() {
+        List<Teacher> teachers = new ArrayList<>();
+
+        // Get all teachers from the database
+        Cursor cursor = (Cursor) dbHelper.getAllTeachers(); // Use your method to get teachers
+
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                int id = cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_TEACHER_ID));
+                String name = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_TEACHER_NAME));
+                String email = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_TEACHER_EMAIL));
+                teachers.add(new Teacher(id, name, email));
+            } while (cursor.moveToNext());
+            cursor.close();
         }
+        return teachers;
     }
 
 }
-

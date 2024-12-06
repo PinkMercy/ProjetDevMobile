@@ -38,7 +38,7 @@ public class HomeFragment extends Fragment {
 
         // Initialize the data list and adapter
         teacherList = new ArrayList<>();
-        populateTeacherList();
+        //populateTeacherList();
 
         // Initialize adapter with the teacher list
         teacherAdapter = new TeacherAdapter(teacherList);
@@ -53,13 +53,13 @@ public class HomeFragment extends Fragment {
         return view;
     }
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-        TextView headerList = view.findViewById(R.id.header_list);
-        headerList.setOnClickListener(this::onShowPopupMenu);
-    }
+//    @Override
+//    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+//        super.onViewCreated(view, savedInstanceState);
+//
+//        TextView headerList = view.findViewById(R.id.header_list);
+//        headerList.setOnClickListener(this::onShowPopupMenu);
+//    }
 
     // Method to populate teacher list with multiple entries
     private void populateTeacherList() {

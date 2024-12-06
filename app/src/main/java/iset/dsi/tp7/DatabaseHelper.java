@@ -5,16 +5,21 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.graphics.Bitmap;
 import android.util.Log;
 import android.widget.Toast;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "MyDataBase.db";
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 3;
+    private ByteArrayOutputStream byteArrayOutputStream;
+    private byte[] byteImage;
+
     private static final String TABLE_NAME = "user_details";
     private static final String ID = "Id";
     private static final String NAME = "Name";
@@ -127,6 +132,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
+    public long insertTeacher(String name, String email) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("name", name);
+        values.put("email", email);
+        return db.insert("Teacher", null, values);
+    }
+
 
     // Insert a new user
     public long insertUser(String name, String email, String username, String password) {
@@ -156,30 +169,31 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     // Add Teacher
-    public long addTeacher(Teacher teacher) {
+    public void addTeacher(Teacher teacher) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(COLUMN_TEACHER_NAME, teacher.getName());
         values.put(COLUMN_TEACHER_EMAIL, teacher.getEmail());
-        return db.insert(TABLE_TEACHER, null, values);
+        db.insert(TABLE_TEACHER, null, values);
     }
 
-    // Get all Teachers
-    public List<Teacher> getAllTeachers() {
-        List<Teacher> teacherList = new ArrayList<>();
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_TEACHER, null);
 
-        if (cursor.moveToFirst()) {
-            do {
-                Teacher teacher = new Teacher(cursor.getInt(0), cursor.getString(1), cursor.getString(2));
-                teacherList.add(teacher);
-            } while (cursor.moveToNext());
-        }
-        cursor.close();
-        db.close();
-        return teacherList;
-    }
+//    // Get all Teachers
+//    public List<Teacher> getAllTeachers() {
+//        List<Teacher> teacherList = new ArrayList<>();
+//        SQLiteDatabase db = this.getReadableDatabase();
+//        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_TEACHER, null);
+//
+//        if (cursor.moveToFirst()) {
+//            do {
+//                Teacher teacher = new Teacher(cursor.getInt(0), cursor.getString(1), cursor.getString(2));
+//                teacherList.add(teacher);
+//            } while (cursor.moveToNext());
+//        }
+//        cursor.close();
+//        db.close();
+//        return teacherList;
+//    }
 
     // Add Cours
     public long addCours(Cours cours) {
@@ -208,4 +222,47 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
         return coursList;
     }
+    public void storeData(ModelClass modelClass){
+        SQLiteDatabase database = this.getWritableDatabase();
+        Bitmap bitmapImage = modelClass.getImage();
+        byteArrayOutputStream = new ByteArrayOutputStream();
+        bitmapImage.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+        byteImage = byteArrayOutputStream.toByteArray();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("username", modelClass.getName());
+        contentValues.put("email", modelClass.getEmail());
+        //contentValues.put("image", byteImage);
+        long checkQuery = database.insert("user_details", null, contentValues);
+        if (checkQuery != -1){
+            Toast.makeText(context, "Saved", Toast.LENGTH_SHORT).show();
+            database.close();
+        } else {
+            Toast.makeText(context, "Something went wrong", Toast.LENGTH_SHORT).show();
+        }
+    }
+    public Cursor getUser(){
+        SQLiteDatabase database = this.getReadableDatabase();
+        Cursor cursor = database.rawQuery("Select * from user_details", null);
+        return cursor;
+    }
+    // In DatabaseHelper.java
+
+    public List<Teacher> getAllTeachers() {
+        List<Teacher> teacherList = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM Teacher", null);  // Query to fetch all teachers
+
+        if (cursor.moveToFirst()) {
+            do {
+                int id = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_TEACHER_ID));
+                String name = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_TEACHER_NAME));
+                String email = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_TEACHER_EMAIL));
+                teacherList.add(new Teacher(id, name, email));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        return teacherList;
+    }
+
 }

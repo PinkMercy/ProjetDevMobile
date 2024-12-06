@@ -9,19 +9,29 @@
     tools:context=".HomeFragment">
 
     <!-- Header TextView for the list of teachers -->
+<!--    <TextView-->
+<!--        android:id="@+id/header_list"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="44dp"-->
+<!--        android:background="#ff2555"-->
+<!--        android:padding="10dp"-->
+<!--        android:text="@string/liste_enseignants"-->
+<!--        android:textColor="@android:color/white"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"/>-->
     <TextView
         android:id="@+id/header_list"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="44dp"
-        android:background="#ff2555"
-        android:padding="10dp"
-        android:text="@string/liste_enseignants"
-        android:textColor="@android:color/white"
+        android:text=" "
+        android:textSize="30sp"
+        android:layout_centerInParent="true"
+        android:textColor="@color/lavender"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
-
     <!-- RecyclerView for displaying the list of teachers -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/mRecyclerview"
@@ -32,6 +42,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/header_list" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="16dp"
+        android:src="@drawable/ic_add"
+        app:backgroundTint="@color/lavender"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

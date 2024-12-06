@@ -1,5 +1,9 @@
 package iset.dsi.tp7;
 
+import android.annotation.SuppressLint;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,21 +19,25 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.NotificationCompat;
 import androidx.fragment.app.Fragment;
 
+import java.text.BreakIterator;
 import java.util.ArrayList;
 import java.util.List;
 
 public class AddCoursFragment extends Fragment {
 
-    private EditText editNomCours, editNbHeures;
+    private EditText editNomCours, editNbHeures , editNom, editEmail;
     private RadioButton radioCours, radioAtelier;
     private Spinner spinnerTeacher;
     private Button btnAddCours;
     private Button btnDeleteCours;
+    private Button btnAddTeacher;
 
     private DatabaseHelper dbHelper;
 
+    @SuppressLint("MissingInflatedId")
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -41,6 +49,8 @@ public class AddCoursFragment extends Fragment {
         radioAtelier = view.findViewById(R.id.radio_atelier);
         spinnerTeacher = view.findViewById(R.id.spinner_teacher);
         btnAddCours = view.findViewById(R.id.btn_add_cours);
+        btnDeleteCours = view.findViewById(R.id.btn_delete_cours);
+        btnAddTeacher = view.findViewById(R.id.add_teacher_button);
         Spinner spinnerTeacher = view.findViewById(R.id.spinner_teacher);
 
 // Fetch all teachers from the database
@@ -87,20 +97,47 @@ public class AddCoursFragment extends Fragment {
 
 
 
-
-            // Insert the course into the database
+                    // Insert the course into the database
             long result = finalDbHelper.insertCours(name, nbHeures, type, enseignantId);
             if (result != -1) {
                 Toast.makeText(getContext(), "Cours ajouté avec succès", Toast.LENGTH_SHORT).show();
+                showNotification(getContext());  // Use getContext() to get the context from the fragment
             } else {
                 Toast.makeText(getContext(), "Échec de l'ajout", Toast.LENGTH_SHORT).show();
             }
+
+
         });
+
+
+//        btnAddTeacher.setOnClickListener(v1 -> {
+//
+//            String nom = editNom.getText().toString().trim();
+//            String email = editEmail.getText().toString().trim();
+//            // insert teacher into the database
+//            long result2 = finalDbHelper.insertTeacher(nom, email);
+//            if (result2 != -1) {
+//                Toast.makeText(getContext(), "Enseignant ajouté avec succès", Toast.LENGTH_SHORT).show();
+//            } else {
+//                Toast.makeText(getContext(), "Échec de l'ajout", Toast.LENGTH_SHORT).show();
+//            }
+//        });
 
 
         return view;
     }
+    private void showNotification(Context context) {
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "course_channel")
+                .setSmallIcon(R.drawable.ic_notification)  // Replace with your actual notification icon
+                .setContentTitle("New Course Added")
+                .setContentText("A new course has been successfully added!")
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setAutoCancel(true)
+                .setDefaults(Notification.DEFAULT_ALL);
 
+        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.notify(1, builder.build());
+    }
 
     private int getSelectedTeacherId() {
         // Simulate getting teacher ID based on the spinner selection

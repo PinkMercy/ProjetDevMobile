@@ -6,20 +6,30 @@
 
     <group>
         <item
-            android:id="@+id/nav_about"
-            android:icon="@drawable/nav_about"
-            android:title="About" />
-        <item
             android:id="@+id/nav_home"
             android:icon="@drawable/nav_home"
             android:title="Gerer Enseignant" />
         <item
             android:id="@+id/nav_cours"
+            android:icon="@drawable/nav_lesson"
             android:title="Gérer Cours" />
 
         <item
             android:id="@+id/nav_liste_cours"
+            android:icon="@drawable/nav_list"
             android:title="Liste des Cours" />
+        <item
+            android:id="@+id/nav_settings"
+            android:icon="@drawable/nav_settings"
+            android:title="Settings"/>
+        <item
+            android:id="@+id/nav_share"
+            android:icon="@drawable/nav_share"
+            android:title="Share"/>
+        <item
+            android:id="@+id/nav_about"
+            android:icon="@drawable/nav_about"
+            android:title="About" />
     </group>
     <item android:title="">
         <menu>
