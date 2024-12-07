@@ -67,6 +67,7 @@ public class UploadActivity extends AppCompatActivity {
         uploadImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Toast.makeText(UploadActivity.this, "bt", Toast.LENGTH_SHORT).show();
                 try {
                     Intent intent = new Intent();
                     intent.setType("image/*");

@@ -90,10 +90,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        playBackgroundMusic();
+
 
         createNotificationChannel();
 
-        playBackgroundMusic();
 
 
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -128,10 +129,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 navImage.setImageBitmap(bitmap);
             }
         }
-        fab.setOnClickListener(view -> {
-            Intent intent = new Intent(MainActivity.this, UploadActivity.class);
-            startActivity(intent);
-        });
+
 
         // Initialize view binding
         bind = ActivityMainBinding.inflate(getLayoutInflater());
@@ -194,7 +192,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        menu.clear(); // Clear existing menu items
+        menu.clear();
         if (enseig) {
             getMenuInflater().inflate(R.menu.menu_main_enseig, menu); // Show Enseignant menu
         } else if (cours) {

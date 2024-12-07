@@ -222,24 +222,35 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
         return coursList;
     }
-    public void storeData(ModelClass modelClass){
+    public void storeData(ModelClass modelClass) {
         SQLiteDatabase database = this.getWritableDatabase();
+
+        // Get the image and convert it to byte[] for storage
         Bitmap bitmapImage = modelClass.getImage();
-        byteArrayOutputStream = new ByteArrayOutputStream();
-        bitmapImage.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
-        byteImage = byteArrayOutputStream.toByteArray();
-        ContentValues contentValues = new ContentValues();
-        contentValues.put("username", modelClass.getName());
-        contentValues.put("email", modelClass.getEmail());
-        //contentValues.put("image", byteImage);
-        long checkQuery = database.insert("user_details", null, contentValues);
-        if (checkQuery != -1){
-            Toast.makeText(context, "Saved", Toast.LENGTH_SHORT).show();
-            database.close();
+        if (bitmapImage != null) {
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            bitmapImage.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+            byte[] byteImage = byteArrayOutputStream.toByteArray();
+
+            ContentValues contentValues = new ContentValues();
+            contentValues.put("username", modelClass.getName());
+            contentValues.put("email", modelClass.getEmail());
+            contentValues.put("image", byteImage);  // Storing the image byte array
+
+            // Try inserting the data into the database
+            long checkQuery = database.insert("user_details", null, contentValues);
+
+            if (checkQuery != -1) {
+                Toast.makeText(context, "Saved", Toast.LENGTH_SHORT).show();
+                database.close();
+            } else {
+                Toast.makeText(context, "Something went wrong", Toast.LENGTH_SHORT).show();
+            }
         } else {
-            Toast.makeText(context, "Something went wrong", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "Image not found", Toast.LENGTH_SHORT).show();
         }
     }
+
     public Cursor getUser(){
         SQLiteDatabase database = this.getReadableDatabase();
         Cursor cursor = database.rawQuery("Select * from user_details", null);

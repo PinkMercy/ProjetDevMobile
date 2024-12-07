@@ -69,6 +69,11 @@ public class TeacherAdapter extends RecyclerView.Adapter<TeacherAdapter.TeacherV
             notifyItemRangeChanged(position, teacherList.size());
         }
     }
+    public void updateTeacherList(List<Teacher> newTeacherList) {
+        this.teacherList.clear();
+        this.teacherList.addAll(newTeacherList);
+        notifyDataSetChanged(); // Notify the adapter about the changes
+    }
 
     public void sortByName(List<Teacher> teachers) {
         Collections.sort(teachers, Comparator.comparing(Teacher::getName));

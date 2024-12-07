@@ -1,5 +1,6 @@
 package iset.dsi.tp7;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -15,6 +16,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +28,7 @@ public class HomeFragment extends Fragment {
     private RecyclerView recyclerView;
     private TeacherAdapter teacherAdapter;
     private List<Teacher> teacherList;
+    private FloatingActionButton fab;
 
     @Nullable
     @Override
@@ -33,17 +37,24 @@ public class HomeFragment extends Fragment {
 
         // Initialize RecyclerView
         recyclerView = view.findViewById(R.id.mRecyclerview);
+        fab = view.findViewById(R.id.fab);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setHasFixedSize(true);
 
         // Initialize the data list and adapter
         teacherList = new ArrayList<>();
-        //populateTeacherList();
+        populateTeacherList();
 
         // Initialize adapter with the teacher list
         teacherAdapter = new TeacherAdapter(teacherList);
         recyclerView.setAdapter(teacherAdapter);  // Set adapter to RecyclerView
 
+        fab.setOnClickListener(v -> {
+                Toast.makeText(requireContext(), "bt", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(requireContext(), UploadActivity.class);
+                startActivity(intent);
+
+        });
 
         // Set adapter in MainActivity for access
         if (getActivity() instanceof MainActivity) {
@@ -63,13 +74,14 @@ public class HomeFragment extends Fragment {
 
     // Method to populate teacher list with multiple entries
     private void populateTeacherList() {
-        for (int i = 1; i <= 20; i++) {
-            teacherList.add(new Teacher(i, "Teacher " + i, "teacher" + i + "@example.com"));
-        }
+//        for (int i = 1; i <= 20; i++) {
+//            teacherList.add(new Teacher(i, "Teacher " + i, "teacher" + i + "@example.com"));
+//        }
 
         // Unique sample entries
-        teacherList.add(new Teacher(21, "rahma", "rahma@gmail.com"));
-        teacherList.add(new Teacher(22, "bacha", "bacha@gmail.com"));
+        teacherList.add(new Teacher(21, "Hend Ben Ayed", "hend.benayed@example.com"));
+        teacherList.add(new Teacher(22, "Ali Ben Salem", "ali.bensalem@example.com"));
+        teacherList.add(new Teacher(22, "Houda Ben Ali", "houda.benali@example.com"));
     }
 
 
